@@ -1,7 +1,9 @@
 package org.example.ex._1._2._11;
 
+import java.util.Objects;
+
 public class SmartDate {
-    private final static String FIELD_SEPARATOR = ".";
+    private final static String FIELD_SEPARATOR = "\\.";
     private final int day;
     private final int month;
     private final int year;
@@ -127,5 +129,29 @@ public class SmartDate {
         daysPassed += day();
 
         return getWeekDayByNumber(daysPassed % 7);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        SmartDate smartDate = (SmartDate) o;
+        return day == smartDate.day &&
+                month == smartDate.month &&
+                year == smartDate.year;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(day, month, year);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%d.%d.%d", day(), month(), year());
     }
 }
