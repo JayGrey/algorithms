@@ -18,4 +18,11 @@ class EvalUtilTest {
         assertEquals("((1+2)*((3-4)*(5-6)))", EvalUtil.completeBrackets("1 + 2 ) * 3 - 4 ) * 5 - 6 )))"));
         assertEquals("((12+21)*((34-43)*(56-65)))", EvalUtil.completeBrackets("12 + 21 ) * 34 - 43 ) * 56 - 65 )))"));
     }
+
+    @Test
+    public void infixToPostfixExpressionTest() {
+        assertEquals("1 2 +", EvalUtil.infixToPostfixExpression("(1 + 2)"));
+        assertEquals("1 2 + 3 *", EvalUtil.infixToPostfixExpression("((1 + 2) * 3)"));
+        assertEquals("3 1 2 + *", EvalUtil.infixToPostfixExpression("(3 * (1 + 2))"));
+    }
 }

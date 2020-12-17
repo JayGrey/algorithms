@@ -38,12 +38,32 @@ public class EvalUtil {
         return expression.pop();
     }
 
+    public static String infixToPostfixExpression(String input) {
+
+        final Stack<Token> operations = new Stack<>();
+        final Stack<String> expressions = new Stack<>();
+        for (Token token : getTokenIterable(input)) {
+            if (token.type == TokenType.OPERATION) {
+                operations.push(token);
+            } else if (token.type == TokenType.NUMBER) {
+                expressions.push(token.value);
+            } else if (token.type == TokenType.CLOSE_BRACKET) {
+                final String exp2 = expressions.pop();
+                final String exp1 = expressions.pop();
+                final String op = operations.pop().value;
+
+                expressions.push(String.format("%s %s %s", exp1, exp2, op));
+            }
+        }
+        return expressions.pop();
+    }
+
     private static Iterable<Token> getTokenIterable(String input) {
         return () -> new TokenIterator(input);
     }
 
 
-    private enum TokenType {CLOSE_BRACKET, NUMBER, OPERATION}
+    private enum TokenType {OPEN_BRACKET, CLOSE_BRACKET, NUMBER, OPERATION}
 
     private static class TokenIterator implements Iterator<Token> {
         private final Queue<Token> tokens;
@@ -64,12 +84,18 @@ public class EvalUtil {
                         digitBuffer.clear();
                     }
                     result.enqueue(new Token(String.valueOf(ch), TokenType.OPERATION));
+                } else if (ch == '(') {
+                    if (!digitBuffer.isEmpty()) {
+                        result.enqueue(new Token(convertToString(digitBuffer), TokenType.NUMBER));
+                        digitBuffer.clear();
+                    }
+                    result.enqueue(Token.OPEN_BRACKET_TOKEN);
                 } else if (ch == ')') {
                     if (!digitBuffer.isEmpty()) {
                         result.enqueue(new Token(convertToString(digitBuffer), TokenType.NUMBER));
                         digitBuffer.clear();
                     }
-                    result.enqueue(new Token("", TokenType.CLOSE_BRACKET));
+                    result.enqueue(Token.CLOSE_BRACKET_TOKEN);
                 } else if (Character.isDigit(ch)) {
                     digitBuffer.enqueue(String.valueOf(ch));
                 }
@@ -100,6 +126,8 @@ public class EvalUtil {
     }
 
     private static class Token {
+        private static final Token OPEN_BRACKET_TOKEN = new Token("", TokenType.OPEN_BRACKET);
+        private static final Token CLOSE_BRACKET_TOKEN = new Token("", TokenType.CLOSE_BRACKET);
         private final String value;
         private final TokenType type;
 
