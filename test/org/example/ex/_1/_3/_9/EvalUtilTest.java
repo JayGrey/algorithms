@@ -25,4 +25,11 @@ class EvalUtilTest {
         assertEquals("1 2 + 3 *", EvalUtil.infixToPostfixExpression("((1 + 2) * 3)"));
         assertEquals("3 1 2 + *", EvalUtil.infixToPostfixExpression("(3 * (1 + 2))"));
     }
+
+    @Test
+    public void evaluatePostfixExpressionTest() {
+        assertEquals(3, EvalUtil.evaluatePostfixExpression("1 2 +"));
+        assertEquals(9, EvalUtil.evaluatePostfixExpression("1 2 + 3 *"));
+        assertEquals(9, EvalUtil.evaluatePostfixExpression("3 1 2 + *"));
+    }
 }

@@ -13,7 +13,7 @@ public class EvalUtil {
 
         Stack<String> expression = new Stack<>();
         Stack<String> operations = new Stack<>();
-        for (Token token : getTokenIterable(input)) {
+        for (Token token : getTokenIterableFromInfixExpression(input)) {
             switch (token.type) {
                 case NUMBER: {
                     expression.push(token.value);
@@ -42,7 +42,7 @@ public class EvalUtil {
 
         final Stack<Token> operations = new Stack<>();
         final Stack<String> expressions = new Stack<>();
-        for (Token token : getTokenIterable(input)) {
+        for (Token token : getTokenIterableFromInfixExpression(input)) {
             if (token.type == TokenType.OPERATION) {
                 operations.push(token);
             } else if (token.type == TokenType.NUMBER) {
@@ -58,17 +58,58 @@ public class EvalUtil {
         return expressions.pop();
     }
 
-    private static Iterable<Token> getTokenIterable(String input) {
-        return () -> new TokenIterator(input);
+    public static long evaluatePostfixExpression(String expression) {
+        Stack<Long> result = new Stack<>();
+
+        for (Token token : getTokenIterableFromPostfixExpression(expression)) {
+            if (token.type == TokenType.NUMBER) {
+                result.push(Long.valueOf(token.value));
+            } else if (token.type == TokenType.OPERATION) {
+                Long op2 = result.pop();
+                Long op1 = result.pop();
+
+                switch (token.value) {
+                    case "+": {
+                        result.push(op1 + op2);
+                        break;
+                    }
+
+                    case "-": {
+                        result.push(op1 - op2);
+                        break;
+                    }
+
+                    case "*": {
+                        result.push(op1 * op2);
+                        break;
+                    }
+
+                    case "/": {
+                        result.push(op1 / op2);
+                        break;
+                    }
+                }
+            }
+        }
+
+        return result.pop();
+    }
+
+    private static Iterable<Token> getTokenIterableFromInfixExpression(String input) {
+        return () -> new InfixTokenIterator(input);
+    }
+
+    private static Iterable<Token> getTokenIterableFromPostfixExpression(String input) {
+        return () -> new PostfixTokenIterator(input);
     }
 
 
     private enum TokenType {OPEN_BRACKET, CLOSE_BRACKET, NUMBER, OPERATION}
 
-    private static class TokenIterator implements Iterator<Token> {
+    private static class InfixTokenIterator implements Iterator<Token> {
         private final Queue<Token> tokens;
 
-        public TokenIterator(String input) {
+        public InfixTokenIterator(String input) {
             tokens = parseString(input);
         }
 
@@ -112,6 +153,56 @@ public class EvalUtil {
             }
 
             return stringBuilder.toString();
+        }
+
+        @Override
+        public boolean hasNext() {
+            return !tokens.isEmpty();
+        }
+
+        @Override
+        public Token next() {
+            return tokens.dequeue();
+        }
+    }
+
+    private static class PostfixTokenIterator implements Iterator<Token> {
+        private final Queue<Token> tokens;
+
+        public PostfixTokenIterator(String input) {
+            tokens = parseString(input);
+        }
+
+        private Queue<Token> parseString(String input) {
+            final Queue<Token> result = new Queue<>();
+            final Queue<Character> digits = new Queue<>();
+
+            for (int i = 0; i < input.length(); i++) {
+                final char ch = input.charAt(i);
+                if (Character.isDigit(ch)) {
+                    digits.enqueue(ch);
+                } else {
+                    if (!digits.isEmpty()) {
+                        result.enqueue(new Token(convertToString(digits), TokenType.NUMBER));
+                        digits.clear();
+                    }
+
+                    if (ch == '+' || ch == '-' || ch == '*' || ch == '/') {
+                        result.enqueue(new Token(String.valueOf(ch), TokenType.OPERATION));
+                    }
+                }
+            }
+            return result;
+        }
+
+        private String convertToString(Queue<Character> digits) {
+            final StringBuilder result = new StringBuilder();
+
+            while (!digits.isEmpty()) {
+                result.append(digits.dequeue());
+            }
+
+            return result.toString();
         }
 
         @Override
