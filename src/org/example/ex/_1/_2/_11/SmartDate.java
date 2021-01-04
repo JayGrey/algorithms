@@ -2,7 +2,7 @@ package org.example.ex._1._2._11;
 
 import java.util.Objects;
 
-public class SmartDate {
+public class SmartDate implements Date {
     private final static String FIELD_SEPARATOR = "\\.";
     private final int day;
     private final int month;
@@ -93,14 +93,17 @@ public class SmartDate {
         }
     }
 
+    @Override
     public int day() {
         return day;
     }
 
+    @Override
     public int month() {
         return month;
     }
 
+    @Override
     public int year() {
         return year;
     }
