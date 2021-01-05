@@ -61,4 +61,24 @@ class LinkedListTest {
         assertEquals(3, integers.delete(0));
         assertEquals(0, integers.size());
     }
+
+    @Test
+    public void findTest1() {
+        final LinkedList<Integer> integers = new LinkedList<>();
+
+        integers.add(1);
+        integers.add(2);
+        integers.add(3);
+
+        assertTrue(integers.find(2));
+        assertFalse(integers.find(4));
+    }
+
+    @Test
+    public void findTest2() {
+        final LinkedList<Integer> integers = new LinkedList<>();
+
+        assertFalse(integers.find(2));
+        assertFalse(integers.find(4));
+    }
 }

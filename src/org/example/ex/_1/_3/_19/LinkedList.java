@@ -1,6 +1,7 @@
 package org.example.ex._1._3._19;
 
 import java.util.Iterator;
+import java.util.Objects;
 
 public class LinkedList<T> implements Iterable<T> {
 
@@ -68,6 +69,20 @@ public class LinkedList<T> implements Iterable<T> {
         N--;
 
         return current.value;
+    }
+
+    public boolean find(T key) {
+        Node<T> current = first;
+
+        while (current != null) {
+            if (Objects.equals(current.value, key)) {
+                return true;
+            }
+
+            current = current.next;
+        }
+
+        return false;
     }
 
     public int size() {
