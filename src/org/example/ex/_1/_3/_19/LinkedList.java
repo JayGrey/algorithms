@@ -47,6 +47,29 @@ public class LinkedList<T> implements Iterable<T> {
         }
     }
 
+    public T delete(int k) {
+        if (first == null || k < 0 || k >= N) {
+            return null;
+        }
+
+        if (k == N - 1) {
+            return removeLast();
+        }
+
+        Node<T> prev = first;
+        Node<T> current = first;
+
+        for (int i = 0; i < k; i++) {
+            prev = current;
+            current = current.next;
+        }
+
+        prev.next = current.next;
+        N--;
+
+        return current.value;
+    }
+
     public int size() {
         return N;
     }
