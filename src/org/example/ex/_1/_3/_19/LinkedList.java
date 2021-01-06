@@ -48,6 +48,28 @@ public class LinkedList<T> implements Iterable<T> {
         }
     }
 
+    public T removeAfter(T key) {
+        Node<T> current = first;
+
+        while (current != null) {
+
+            if (Objects.equals(current.value, key)) {
+                Node<T> next = current.next;
+                if (next == null) {
+                    return null;
+                } else {
+                    current.next = next.next;
+                    N--;
+                    return next.value;
+                }
+            }
+
+            current = current.next;
+        }
+
+        return null;
+    }
+
     public T delete(int k) {
         if (first == null || k < 0 || k >= N) {
             return null;

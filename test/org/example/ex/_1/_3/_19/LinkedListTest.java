@@ -81,4 +81,35 @@ class LinkedListTest {
         assertFalse(integers.find(2));
         assertFalse(integers.find(4));
     }
+
+    @Test
+    public void removeAfterTest1() {
+        final LinkedList<Integer> integers = new LinkedList<>();
+
+        integers.add(1);
+        integers.add(2);
+        integers.add(3);
+
+        assertEquals(3, integers.size());
+        assertEquals(2, integers.removeAfter(1));
+        assertEquals(2, integers.size());
+    }
+
+    @Test
+    public void removeAfterTest2() {
+        final LinkedList<Integer> integers = new LinkedList<>();
+
+        integers.add(1);
+        integers.add(2);
+        integers.add(3);
+
+        assertNull(integers.removeAfter(3));
+        assertEquals(3, integers.size());
+
+        assertNull(integers.removeAfter(4));
+        assertEquals(3, integers.size());
+
+        assertNull(integers.removeAfter(null));
+        assertEquals(3, integers.size());
+    }
 }
