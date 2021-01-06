@@ -48,6 +48,9 @@ public class LinkedList<T> implements Iterable<T> {
         }
     }
 
+    /**
+     * removes element after element with value <b>key</b>
+     */
     public T removeAfter(T key) {
         Node<T> current = first;
 
@@ -70,6 +73,34 @@ public class LinkedList<T> implements Iterable<T> {
         return null;
     }
 
+    /**
+     * inserts element with value <b>inserted</b> after element with value <b>element</b>
+     *
+     * @param element  node after which inserts
+     * @param inserted element which should be inserted after
+     * @return <b>true</b> if insertion is successful <b>false</b> otherwise
+     */
+    public boolean insertAfter(T element, T inserted) {
+
+        Node<T> current = first;
+
+        while (current != null) {
+            if (Objects.equals(current.value, element)) {
+                Node<T> next = current.next;
+                current.next = new Node<>(inserted, next);
+                N++;
+                return true;
+            }
+
+            current = current.next;
+        }
+
+        return false;
+    }
+
+    /**
+     * removes first element whose value is <b>k</b>
+     * */
     public T delete(int k) {
         if (first == null || k < 0 || k >= N) {
             return null;

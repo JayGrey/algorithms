@@ -112,4 +112,28 @@ class LinkedListTest {
         assertNull(integers.removeAfter(null));
         assertEquals(3, integers.size());
     }
+
+    @Test
+    public void insertAfterTest() {
+        final LinkedList<Integer> integers = new LinkedList<>();
+
+        integers.add(1);
+
+        assertTrue(integers.insertAfter(1, 2));
+        assertEquals(2, integers.size());
+
+        assertTrue(integers.insertAfter(2, 3));
+        assertEquals(3, integers.size());
+
+        assertTrue(integers.insertAfter(1, 4));
+        assertEquals(4, integers.size());
+
+        assertFalse(integers.insertAfter(5, 6));
+        assertEquals(4, integers.size());
+
+        assertEquals(3, integers.removeLast());
+        assertEquals(2, integers.removeLast());
+        assertEquals(4, integers.removeLast());
+        assertEquals(1, integers.removeLast());
+    }
 }
