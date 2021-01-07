@@ -8,6 +8,9 @@ public class LinkedList<T> implements Iterable<T> {
     private Node<T> first;
     private int N;
 
+    /**
+     * adds element to the end of the list
+     * */
     public void add(T element) {
         if (first == null) {
             first = new Node<>(element, null);
@@ -22,6 +25,10 @@ public class LinkedList<T> implements Iterable<T> {
         N++;
     }
 
+    /**
+     * removes last element in the list
+     * @return removed element or <b>null</b> if list is empty
+     * */
     public T removeLast() {
         if (first == null) {
             return null;
@@ -74,6 +81,31 @@ public class LinkedList<T> implements Iterable<T> {
     }
 
     /**
+     * removes all elements whose value is equal to <b>key</b>
+     */
+    public void removeAll(T key) {
+        Node<T> prev = null;
+        Node<T> current = first;
+
+        while (current != null) {
+
+            if (Objects.equals(current.value, key)) {
+                if (prev == null) {
+                    first = current = current.next;
+                } else {
+                    prev.next = current = current.next;
+                }
+
+                N--;
+                continue;
+            }
+
+            prev = current;
+            current = current.next;
+        }
+    }
+
+    /**
      * inserts element with value <b>inserted</b> after element with value <b>element</b>
      *
      * @param element  node after which inserts
@@ -100,7 +132,7 @@ public class LinkedList<T> implements Iterable<T> {
 
     /**
      * removes first element whose value is <b>k</b>
-     * */
+     */
     public T delete(int k) {
         if (first == null || k < 0 || k >= N) {
             return null;
