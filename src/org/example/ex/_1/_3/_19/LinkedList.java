@@ -225,16 +225,6 @@ public class LinkedList<T> implements Iterable<T> {
         return new LinkedListIterator();
     }
 
-    private static class Node<E> {
-        private final E value;
-        private Node<E> next;
-
-        public Node(E value, Node<E> next) {
-            this.value = value;
-            this.next = next;
-        }
-    }
-
     private class LinkedListIterator implements Iterator<T> {
         private Node<T> current = first;
 
