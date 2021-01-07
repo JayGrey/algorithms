@@ -1,5 +1,6 @@
 package org.example.ex._1._3._19;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Objects;
 
@@ -10,7 +11,7 @@ public class LinkedList<T> implements Iterable<T> {
 
     /**
      * adds element to the end of the list
-     * */
+     */
     public void add(T element) {
         if (first == null) {
             first = new Node<>(element, null);
@@ -27,8 +28,9 @@ public class LinkedList<T> implements Iterable<T> {
 
     /**
      * removes last element in the list
+     *
      * @return removed element or <b>null</b> if list is empty
-     * */
+     */
     public T removeLast() {
         if (first == null) {
             return null;
@@ -168,6 +170,30 @@ public class LinkedList<T> implements Iterable<T> {
         }
 
         return false;
+    }
+
+    /**
+     * returns max value in the list according to <b>comparator</b>
+     */
+    public T max(Comparator<T> comparator) {
+        if (N == 0 || comparator == null) {
+            return null;
+        } else if (N == 1) {
+            return first.value;
+        } else {
+            T result = first.value;
+            Node<T> current = first.next;
+            while (current != null) {
+
+                if (comparator.compare(current.value, result) > 0) {
+                    result = current.value;
+                }
+
+                current = current.next;
+            }
+
+            return result;
+        }
     }
 
     public int size() {
