@@ -196,6 +196,22 @@ public class LinkedList<T> implements Iterable<T> {
         }
     }
 
+    /**
+     * recursively searches and returns max value in the list according to <b>comparator</b>
+     */
+    public T maxR(Comparator<T> comparator) {
+        return (N == 0 || comparator == null) ? null : maxRRunner(first.next, first.value, comparator);
+    }
+
+    private T maxRRunner(Node<T> current, T maxElement, Comparator<T> comparator) {
+        if (current == null) {
+            return maxElement;
+        } else {
+            return maxRRunner(current.next,
+                    comparator.compare(current.value, maxElement) > 0 ? current.value : maxElement, comparator);
+        }
+    }
+
     public int size() {
         return N;
     }

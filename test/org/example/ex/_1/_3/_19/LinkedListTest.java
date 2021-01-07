@@ -228,4 +228,43 @@ class LinkedListTest {
 
         assertEquals(3, integers.max(Integer::compareTo));
     }
+
+    @Test
+    public void maxRTest1() {
+        final LinkedList<Integer> integers = new LinkedList<>();
+
+        integers.add(1);
+        integers.add(5);
+        integers.add(3);
+        integers.add(0);
+
+        assertEquals(5, integers.maxR(Integer::compareTo));
+    }
+
+    @Test
+    public void maxRTest2() {
+        final LinkedList<Integer> integers = new LinkedList<>();
+
+        integers.add(2);
+        integers.add(2);
+        integers.add(2);
+        integers.add(2);
+
+        assertEquals(2, integers.maxR(Integer::compareTo));
+    }
+
+    @Test
+    public void maxRTest3() {
+        final LinkedList<Integer> integers = new LinkedList<>();
+
+        assertNull(integers.maxR(Integer::compareTo));
+    }
+
+    @Test
+    public void maxRTest4() {
+        final LinkedList<Integer> integers = new LinkedList<>();
+        integers.add(3);
+
+        assertEquals(3, integers.maxR(Integer::compareTo));
+    }
 }
