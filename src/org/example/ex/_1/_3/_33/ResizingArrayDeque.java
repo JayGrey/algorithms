@@ -81,7 +81,7 @@ public class ResizingArrayDeque<T> implements Iterable<T> {
 
         @Override
         public boolean hasNext() {
-            return currentIndex == N;
+            return currentIndex < N;
         }
 
         @Override
