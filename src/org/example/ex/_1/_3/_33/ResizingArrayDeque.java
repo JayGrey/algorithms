@@ -2,73 +2,32 @@ package org.example.ex._1._3._33;
 
 import java.util.Iterator;
 
-public class ResizingArrayDeque<T> implements Iterable<T> {
+public final class ResizingArrayDeque<T> implements Iterable<T> {
 
-    private static final int NOMINAL_ARRAY_SIZE = 8;
-
-    @SuppressWarnings("unchecked")
-    private T[] array = (T[]) new Object[NOMINAL_ARRAY_SIZE];
-
-    private int N = 0;
+    private final ResizingArray<T> array = new ResizingArray<>();
 
     public void pushLeft(T item) {
-        if (N + 1 >= array.length) {
-            increaseArray();
-        }
-
-        System.arraycopy(array, 0, array, 1, N);
-        array[0] = item;
-        N++;
+        array.addFirst(item);
     }
 
     public void pushRight(T item) {
-        if (N >= array.length) {
-            increaseArray();
-        }
-
-        array[N++] = item;
+        array.addLast(item);
     }
 
     public T popLeft() {
-        if (N == 0) {
-            return null;
-        }
-
-        final T value = array[0];
-        System.arraycopy(array, 1, array, 0, N);
-        array[N - 1] = null;
-        N--;
-
-        return value;
+        return array.remove(0);
     }
 
     public T popRight() {
-        if (N == 0) {
-            return null;
-        }
-        final T value = array[N - 1];
-        array[N - 1] = null;
-        N--;
-        return value;
+        return array.remove(array.size() - 1);
     }
 
     public int size() {
-        return N;
+        return array.size();
     }
 
     public boolean isEmpty() {
-        return N == 0;
-    }
-
-    /**
-     * increase array size twice
-     */
-    private void increaseArray() {
-        @SuppressWarnings("unchecked")
-        T[] tempArray = (T[]) new Object[array.length * 2];
-
-        System.arraycopy(array, 0, tempArray, 0, N);
-        array = tempArray;
+        return array.isEmpty();
     }
 
     @Override
@@ -81,12 +40,12 @@ public class ResizingArrayDeque<T> implements Iterable<T> {
 
         @Override
         public boolean hasNext() {
-            return currentIndex < N;
+            return currentIndex < array.size();
         }
 
         @Override
         public T next() {
-            return array[currentIndex++];
+            return array.get(currentIndex++);
         }
     }
 }
