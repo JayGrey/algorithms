@@ -4,7 +4,9 @@ import edu.princeton.cs.algs4.StdRandom;
 import org.example.ex._1._3._14.Queue;
 import org.example.ex._1._3._33.ResizingArray;
 
-public class RandomQueue<T> implements Queue<T> {
+import java.util.Iterator;
+
+public class RandomQueue<T> implements Queue<T>, Iterable<T> {
 
     private final ResizingArray<T> array = new ResizingArray<>();
 
@@ -32,5 +34,34 @@ public class RandomQueue<T> implements Queue<T> {
 
     public boolean isEmpty() {
         return array.isEmpty();
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new RandomQueueIterator();
+    }
+
+    private class RandomQueueIterator implements Iterator<T> {
+        @SuppressWarnings("unchecked")
+        private final T[] array = (T[]) new Object[RandomQueue.this.array.size()];
+
+        private int index;
+
+        public RandomQueueIterator() {
+            for (int i = 0; i < array.length; i++) {
+                array[i] = RandomQueue.this.array.get(i);
+            }
+            StdRandom.shuffle(array);
+        }
+
+        @Override
+        public boolean hasNext() {
+            return index < array.length;
+        }
+
+        @Override
+        public T next() {
+            return array[index++];
+        }
     }
 }

@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class RandomQueueTest {
 
     @Test
-    void enqueue() {
+    public void enqueueTest() {
         final RandomQueue<Integer> queue = new RandomQueue<>();
 
         assertTrue(queue.isEmpty());
@@ -21,7 +21,7 @@ class RandomQueueTest {
     }
 
     @Test
-    void dequeue() {
+    public void dequeueTest() {
         final RandomQueue<Integer> queue = new RandomQueue<>();
 
         for (int i = 0; i < 20; i++) {
@@ -37,7 +37,7 @@ class RandomQueueTest {
     }
 
     @Test
-    void sample() {
+    public void sampleTest() {
         final RandomQueue<Integer> queue = new RandomQueue<>();
 
         for (int i = 0; i < 20; i++) {
@@ -50,5 +50,20 @@ class RandomQueueTest {
         System.out.println();
 
         assertEquals(20, queue.size());
+    }
+
+    @Test
+    public void iteratorTest() {
+        final RandomQueue<Integer> queue = new RandomQueue<>();
+
+        for (int i = 0; i < 20; i++) {
+            queue.enqueue(i);
+        }
+
+        for (Integer integer : queue) {
+            System.out.print(integer + " ");
+        }
+
+        System.out.println();
     }
 }
