@@ -133,7 +133,7 @@ public class LinkedList<T> implements Iterable<T> {
     }
 
     /**
-     * removes first element whose value is <b>k</b>
+     * removes first element whose index is <b>k</b>
      */
     public T delete(int k) {
         if (first == null || k < 0 || k >= N) {
