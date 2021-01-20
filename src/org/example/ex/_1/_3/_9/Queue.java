@@ -1,10 +1,23 @@
 package org.example.ex._1._3._9;
 
-public class Queue<Item> {
+import org.example.ex._1._3._19.Node;
+
+import java.util.Iterator;
+
+public class Queue<Item> implements Iterable<Item> {
 
     private Node<Item> first;
     private Node<Item> last;
-    private int N;
+    private transient int N;
+
+    public Queue() {
+    }
+
+    public Queue(Queue<Item> other) {
+        for (Item item : other) {
+            enqueue(item);
+        }
+    }
 
     public boolean isEmpty() {
         return first == null;
@@ -28,11 +41,16 @@ public class Queue<Item> {
     }
 
     public Item dequeue() {
-        final Item value = first.value;
-        first = first.next;
+        if (N == 0) {
+            return null;
+        }
 
-        if (isEmpty()) {
-            last = null;
+        final Item value = first.value;
+
+        if (N == 1) {
+            first = last = null;
+        } else {
+            first = first.next;
         }
 
         N--;
@@ -45,13 +63,25 @@ public class Queue<Item> {
         N = 0;
     }
 
-    private static class Node<E> {
-        private E value;
-        private Node<E> next;
+    @Override
+    public Iterator<Item> iterator() {
+        return new QueueIterator();
+    }
 
-        public Node(E value, Node<E> next) {
-            this.value = value;
-            this.next = next;
+    private class QueueIterator implements Iterator<Item> {
+        private Node<Item> current = first;
+
+
+        @Override
+        public boolean hasNext() {
+            return current != null;
+        }
+
+        @Override
+        public Item next() {
+            final Item value = current.value;
+            current = current.next;
+            return value;
         }
     }
 }
