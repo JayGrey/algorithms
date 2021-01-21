@@ -1,10 +1,26 @@
 package org.example.ex._1._3._7;
 
+import org.example.ex._1._3._19.Node;
+
 import java.util.Iterator;
 
 public class Stack<Item> implements Iterable<Item> {
     private Node<Item> first;
-    private int N;
+    private transient int N;
+
+    public Stack() {
+    }
+
+    public Stack(Stack<Item> stack) {
+        final Stack<Item> temp = new Stack<>();
+        for (Item item : stack) {
+            temp.push(item);
+        }
+
+        while (!temp.isEmpty()) {
+            push(temp.pop());
+        }
+    }
 
     public boolean isEmpty() {
         return N == 0;
@@ -52,23 +68,12 @@ public class Stack<Item> implements Iterable<Item> {
         return new StackIterator();
     }
 
-    private static class Node<E> {
-        private final E value;
-        private final Node<E> next;
-
-        public Node(E value, Node<E> next) {
-            this.value = value;
-            this.next = next;
-        }
-    }
-
     private class StackIterator implements Iterator<Item> {
         private Node<Item> currentNode = first;
 
-
         @Override
         public boolean hasNext() {
-            return currentNode != null && currentNode.next != null;
+            return currentNode != null;
         }
 
         @Override

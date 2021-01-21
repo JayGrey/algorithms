@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class StackTest {
 
     @Test
-    void isEmpty() {
+    public void isEmptyTest() {
         final Stack<Integer> stack = new Stack<>();
         assertTrue(stack.isEmpty());
 
@@ -21,20 +21,20 @@ class StackTest {
     }
 
     @Test
-    void size() {
+    public void sizeTest() {
         final Stack<Integer> stack = new Stack<>();
 
         assertEquals(0, stack.size());
 
         stack.push(1);
-        assertEquals(1, stack.size());;
+        assertEquals(1, stack.size());
 
         stack.pop();
         assertEquals(0, stack.size());
     }
 
     @Test
-    void pushAndPop() {
+    public void pushAndPopTest() {
         final Stack<Integer> stack = new Stack<>();
 
         stack.push(1);
@@ -46,7 +46,7 @@ class StackTest {
     }
 
     @Test
-    void peek() {
+    public void peekTest() {
         final Stack<Integer> stack = new Stack<>();
 
         stack.push(1);
@@ -55,5 +55,73 @@ class StackTest {
 
         assertEquals(2, stack.peek());
         assertEquals(2, stack.size());
+    }
+
+    @Test
+    public void copyConstructorTest() {
+        final Stack<Integer> stack1 = new Stack<>();
+        stack1.push(3);
+        stack1.push(2);
+        stack1.push(1);
+
+        final Stack<Integer> stack2 = new Stack<>(stack1);
+
+        assertEquals(3, stack1.size());
+        assertEquals(3, stack2.size());
+
+        assertEquals(1, stack1.pop());
+        assertEquals(2, stack1.size());
+        assertEquals(3, stack2.size());
+
+        assertEquals(1, stack2.pop());
+        assertEquals(2, stack1.size());
+        assertEquals(2, stack2.size());
+    }
+
+    @Test
+    public void copyTest() {
+        final Stack<Integer> stack1 = new Stack<>();
+        stack1.push(3);
+        stack1.push(2);
+        stack1.push(1);
+
+        final Stack<Integer> stack2 = stack1.copy();
+
+        assertEquals(3, stack1.size());
+        assertEquals(3, stack2.size());
+
+        assertEquals(1, stack1.pop());
+        assertEquals(2, stack1.size());
+        assertEquals(3, stack2.size());
+
+        assertEquals(1, stack2.pop());
+        assertEquals(2, stack1.size());
+        assertEquals(2, stack2.size());
+
+        stack1.push(1);
+        assertEquals(3, stack1.size());
+        assertEquals(2, stack2.size());
+
+        stack2.push(1);
+        assertEquals(3, stack1.size());
+        assertEquals(3, stack2.size());
+    }
+
+    @Test
+    public void iteratorTest() {
+        final Stack<Integer> stack = new Stack<>();
+
+        for (int i = 9; i >= 0; i--) {
+            stack.push(i);
+        }
+
+        assertEquals(10, stack.size());
+
+        int expected = 0;
+        for (Integer integer : stack) {
+            assertEquals(expected++, integer);
+        }
+        assertEquals(10, stack.size());
+
     }
 }
