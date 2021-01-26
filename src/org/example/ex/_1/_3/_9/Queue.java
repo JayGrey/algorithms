@@ -4,7 +4,7 @@ import org.example.ex._1._3._19.Node;
 
 import java.util.Iterator;
 
-public class Queue<Item> implements Iterable<Item> {
+public class Queue<Item> implements org.example.ex._1._3._14.Queue<Item>, Iterable<Item> {
 
     private Node<Item> first;
     private Node<Item> last;
