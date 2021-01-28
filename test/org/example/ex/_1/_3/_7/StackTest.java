@@ -2,8 +2,12 @@ package org.example.ex._1._3._7;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class StackTest {
@@ -108,7 +112,7 @@ class StackTest {
     }
 
     @Test
-    public void iteratorTest() {
+    public void iterator1Test() {
         final Stack<Integer> stack = new Stack<>();
 
         for (int i = 9; i >= 0; i--) {
@@ -123,5 +127,24 @@ class StackTest {
         }
         assertEquals(10, stack.size());
 
+    }
+
+    @Test
+    public void iterator2Test() {
+        final Stack<Integer> stack = new Stack<>();
+
+        for (int i = 9; i >= 0; i--) {
+            stack.push(i);
+        }
+
+        final Iterator<Integer> iterator = stack.iterator();
+
+        assertEquals(0, stack.pop());
+
+        assertThrows(ConcurrentModificationException.class, () -> {
+            while (iterator.hasNext()) {
+                iterator.next();
+            }
+        });
     }
 }

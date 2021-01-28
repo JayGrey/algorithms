@@ -2,11 +2,13 @@ package org.example.ex._1._3._7;
 
 import org.example.ex._1._3._19.Node;
 
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
 public class Stack<Item> implements Iterable<Item> {
     private Node<Item> first;
     private transient int N;
+    private transient int version;
 
     public Stack() {
     }
@@ -33,12 +35,14 @@ public class Stack<Item> implements Iterable<Item> {
     public void push(Item item) {
         first = new Node<>(item, first);
         N++;
+        version++;
     }
 
     public Item pop() {
         final Item value = first.value;
         first = first.next;
         N--;
+        version++;
 
         return value;
     }
@@ -69,6 +73,7 @@ public class Stack<Item> implements Iterable<Item> {
     }
 
     private class StackIterator implements Iterator<Item> {
+        private final int currentVersion = version;
         private Node<Item> currentNode = first;
 
         @Override
@@ -78,6 +83,9 @@ public class Stack<Item> implements Iterable<Item> {
 
         @Override
         public Item next() {
+            if (currentVersion != version) {
+                throw new ConcurrentModificationException();
+            }
             final Item value = currentNode.value;
             currentNode = currentNode.next;
 
