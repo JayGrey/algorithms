@@ -1,6 +1,8 @@
 package org.example.ex._1._3._33;
 
-public final class ResizingArray<T> {
+import java.util.Iterator;
+
+public final class ResizingArray<T> implements Iterable<T> {
 
     private static final int INITIAL_ARRAY_SIZE = 8;
 
@@ -79,5 +81,24 @@ public final class ResizingArray<T> {
 
         System.arraycopy(array, 0, tempArray, 0, N);
         array = tempArray;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new ResizingArrayIterator();
+    }
+
+    private class ResizingArrayIterator implements Iterator<T> {
+        private int currentPos = 0;
+
+        @Override
+        public boolean hasNext() {
+            return currentPos < N;
+        }
+
+        @Override
+        public T next() {
+            return array[currentPos++];
+        }
     }
 }
