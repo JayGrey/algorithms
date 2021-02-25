@@ -1,4 +1,4 @@
-package org.example.ex._1._4;
+package org.example.ex._1._4._3;
 
 public class TwoSum {
     int count(int[] array) {
