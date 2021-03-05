@@ -17,10 +17,10 @@ public class LocalMinimumTester {
 
             final int[] array = new int[i];
             for (int j = 0; j < array.length; j++) {
-                array[j] = j;
+                array[j] = array.length - j - 1;
             }
-            final int tmp = array[array.length - 3];
-            array[array.length - 3] = array[array.length - 2];
+            final int tmp = array[array.length - 1];
+            array[array.length - 1] = array[array.length - 2];
             array[array.length - 2] = tmp;
 //            StdRandom.shuffle(array);
 

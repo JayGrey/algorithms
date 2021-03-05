@@ -3,53 +3,49 @@ package org.example.ex._1._4._18;
 public class LocalMinimum {
 
     public static int find(int[] array) {
-        if (array == null || array.length < 3) {
+        if (array == null || array.length == 0) {
             return -1;
         }
 
-        int result = findLocal(array, SearchDirection.ASCENDING, 0, array.length - 1);
-        return result != -1 ? result : findLocal(array, SearchDirection.DESCENDING, 0, array.length - 1);
-    }
+        int from = 0;
+        int to = array.length - 1;
 
-    public static int findLinear(int[] array) {
-        if (array == null || array.length < 3) {
-            return -1;
-        }
+        while (from <= to) {
+            final int mid = (from + to) / 2;
 
-        final int to = array.length - 2;
-        for (int i = 1; i <= to; i++) {
-            if (array[i] < array[i - 1] && array[i] < array[i + 1]) {
-                return i;
+            final int minIndex = getMinIndex(array, mid);
+            if (mid == minIndex) {
+                return mid;
+            }
+
+            if (minIndex < mid) {
+                to = mid - 1;
+            } else {
+                from = mid + 1;
             }
         }
 
         return -1;
     }
 
-    private static int findLocal(int[] array, SearchDirection direction, int from, int to) {
-        final int mid = (from + to) / 2;
-
-        if (from > to || mid == 0 || mid == array.length - 1) {
-            return -1;
+    private static int getMinIndex(int[] array, int index) {
+        if (index > 0) { // has A
+            if (index < array.length - 1) { //has C
+                // min (a, b, c)
+                if (array[index] < array[index - 1] && array[index] < array[index + 1]) {
+                    return index;
+                } else if (array[index - 1] < array[index + 1]) {
+                    return index - 1;
+                } else {
+                    return index + 1;
+                }
+            } else {
+                return array[index - 1] < array[index] ? index - 1 : index;
+            }
+        } else if (index < array.length - 1) {
+            return array[index + 1] < array[index] ? index + 1 : index;
         }
 
-        if (array[mid] < array[mid - 1] && array[mid] < array[mid + 1]) {
-            return mid;
-        }
-
-        if (direction == SearchDirection.DESCENDING) {
-            return array[mid - 1] < array[mid + 1]
-                    ? findLocal(array, direction, from, mid - 1)
-                    : findLocal(array, direction, mid + 1, to);
-
-        } else if (direction == SearchDirection.ASCENDING) {
-            return array[mid - 1] > array[mid + 1]
-                    ? findLocal(array, direction, from, mid - 1)
-                    : findLocal(array, direction, mid + 1, to);
-        }
-
-        return -1;
+        return index;
     }
-
-    private enum SearchDirection {ASCENDING, DESCENDING}
 }
