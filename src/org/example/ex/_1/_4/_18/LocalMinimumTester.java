@@ -1,14 +1,12 @@
 package org.example.ex._1._4._18;
 
 import edu.princeton.cs.algs4.StdOut;
-import edu.princeton.cs.algs4.StdRandom;
 
 public class LocalMinimumTester {
     public static void main(String[] args) {
 
-        runTester();
-//        LocalMinimum.find(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0, 16});
-//        LocalMinimum.find(new int[]{-8, -7, -6, -5, -4, -3, -2, 8, 0, 9});
+//        runTester();
+        runMatrixTester();
     }
 
     private static void runTester() {
@@ -31,5 +29,28 @@ public class LocalMinimumTester {
             StdOut.printf("%9d | %8d | %f%n", i, currentTime, currentTime / (previousTime * 1.0));
             previousTime = currentTime;
         }
+    }
+
+    private static void runMatrixTester() {
+        long previousTime = 1;
+        for (int N = 8; N < 16384 * 2 + 1; N += N) {
+
+            int[][] matrix = new int[N][];
+            for (int i = 0; i < matrix.length; i++) {
+                matrix[i] = new int[N];
+
+                for (int j = 0; j < N; j++) {
+                    matrix[i][j] = i * N + j;
+                }
+            }
+
+            final long startTime = System.currentTimeMillis();
+            LocalMinimum.findMatrix(matrix);
+            final long endTime = System.currentTimeMillis();
+            final long currentTime = Math.max(1, endTime - startTime);
+            StdOut.printf("%9d | %8d | %f%n", N, currentTime, currentTime / (previousTime * 1.0));
+            previousTime = currentTime;
+        }
+
     }
 }
