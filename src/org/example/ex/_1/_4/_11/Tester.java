@@ -1,23 +1,28 @@
 package org.example.ex._1._4._11;
 
 import edu.princeton.cs.algs4.StdOut;
-import org.example.ex._1._4._10.Search;
+import edu.princeton.cs.algs4.StdRandom;
 
 public class Tester {
-    private static final int MAX_LENGTH = 10_000_000;
-
-
     public static void main(String[] args) {
-        for (int i = 8; i < MAX_LENGTH; i += i) {
+        long previousTime = 1;
+        for (int N = 8; N < Integer.MAX_VALUE - 1; N += N) {
 
-            final int[] array = new int[i];
+            final int[] array = new int[N];
+            for (int i = 0; i < N; i++) {
+                array[i] = StdRandom.uniform(-1000, 1000);
+            }
+            array[0] = 0;
+            final StaticSETofInts set = new StaticSETofInts(array);
 
             final long startTime = System.currentTimeMillis();
 
-            final StaticSETofInts set = new StaticSETofInts(array);
-            assert set.howMany(0) == i;
+            assert set.contains(0);
 
-            StdOut.printf("%8d | %3d%n", i, System.currentTimeMillis() - startTime);
+            final long endTime = System.currentTimeMillis();
+            final long currentTime = Math.max(1, endTime - startTime);
+            StdOut.printf("%9d | %8d | %f%n", N, currentTime, currentTime / (previousTime * 1.0));
+            previousTime = currentTime;
         }
     }
 }

@@ -21,6 +21,14 @@ class StaticSETofIntsTest {
     }
 
     @Test
+    void contains3() {
+        final StaticSETofInts set = new StaticSETofInts(new int[]{5, 5, 4, 4, 3, 2, 1, 0});
+        assertFalse(set.contains(-1));
+        assertFalse(set.contains(6));
+        assertTrue(set.contains(5));
+    }
+
+    @Test
     void howMany() {
         final StaticSETofInts set = new StaticSETofInts(new int[]{1, 1, 1, 1});
 

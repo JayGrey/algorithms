@@ -13,7 +13,24 @@ public class StaticSETofInts {
     }
 
     public boolean contains(int key) {
-        return rank(key, RankType.EXACT, 0, array.length - 1) != -1;
+        int from = 0;
+        int to = array.length - 1;
+
+        while (from <= to) {
+            final int mid = (from + to) / 2;
+
+            if (array[mid] == key) {
+                return true;
+            }
+
+            if (key < array[mid]) {
+                to = rank(array[mid], RankType.SMALLEST, from, mid) - 1;
+            } else {
+                from = rank(array[mid], RankType.BIGGEST, mid, to) + 1;
+            }
+        }
+
+        return false;
     }
 
     public int howMany(int key) {
