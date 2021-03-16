@@ -5,7 +5,7 @@ import org.example.ex._1._3._19.Node;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
-public class Stack<Item> implements Iterable<Item> {
+public class Stack<Item> implements Iterable<Item>, IStack<Item> {
     private Node<Item> first;
     private transient int N;
     private transient int version;
@@ -24,20 +24,24 @@ public class Stack<Item> implements Iterable<Item> {
         }
     }
 
+    @Override
     public boolean isEmpty() {
         return N == 0;
     }
 
+    @Override
     public int size() {
         return N;
     }
 
+    @Override
     public void push(Item item) {
         first = new Node<>(item, first);
         N++;
         version++;
     }
 
+    @Override
     public Item pop() {
         final Item value = first.value;
         first = first.next;
