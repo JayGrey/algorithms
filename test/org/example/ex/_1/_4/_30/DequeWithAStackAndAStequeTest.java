@@ -1,5 +1,6 @@
 package org.example.ex._1._4._30;
 
+import org.example.ex._1._3._33.IDeque;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -7,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class DequeWithAStackAndAStequeTest {
     @Test
     public void test() {
-        final DequeWithAStackAndASteque<Integer> deque = new DequeWithAStackAndASteque<>();
+        final IDeque<Integer> deque = new DequeWithAStackAndASteque<>();
         assertEquals(0, deque.size());
 
         deque.pushLeft(1);
