@@ -1,16 +1,18 @@
 package org.example.ex._1._3._3;
 
-public class FixedCapacityStackOfIntegers {
+import org.example.ex._1._3._7.IStack;
 
-    private final Integer[] array;
+public class FixedCapacityStackOfInts {
+
+    private final int[] array;
     private int N;
 
-    public FixedCapacityStackOfIntegers(int n) {
+    public FixedCapacityStackOfInts(int n) {
         if (n < 1) {
             throw new IllegalArgumentException();
         }
 
-        array = new Integer[n];
+        array = new int[n];
     }
 
     public boolean isEmpty() {
@@ -30,10 +32,7 @@ public class FixedCapacityStackOfIntegers {
     }
 
     public int pop() {
-        int result = array[--N];
-        array[N] = null;
-
-        return result;
+        return array[--N];
     }
 
 }

@@ -12,7 +12,7 @@ public class Runner {
             sequence[i] = i;
         }
 
-        final FixedCapacityStackOfIntegers stack = new FixedCapacityStackOfIntegers(sequence.length);
+        final FixedCapacityStackOfInts stack = new FixedCapacityStackOfInts(sequence.length);
 
         int sequenceIndex = 0;
         int validArrayIndex = 0;

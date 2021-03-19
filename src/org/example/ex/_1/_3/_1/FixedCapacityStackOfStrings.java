@@ -1,37 +1,30 @@
 package org.example.ex._1._3._1;
 
 public class FixedCapacityStackOfStrings {
-    private final String[] array;
-    private int N;
+
+    private final FixedCapacityStack<String> stack;
 
     public FixedCapacityStackOfStrings(int n) {
-        if (n < 1) {
-            throw new IllegalArgumentException();
-        }
-
-        array = new String[n];
+        stack = new FixedCapacityStack<>(n);
     }
 
     public boolean isEmpty() {
-        return N == 0;
+        return stack.isEmpty();
     }
 
     public boolean isFull() {
-        return array.length == N;
+        return stack.isFull();
     }
 
     public int size() {
-        return N;
+        return stack.size();
     }
 
     public void push(String s) {
-        array[N++] = s;
+        stack.push(s);
     }
 
     public String pop() {
-        String result = array[--N];
-        array[N] = null;
-
-        return result;
+        return stack.pop();
     }
 }
