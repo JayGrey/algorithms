@@ -1,5 +1,7 @@
 package org.example.ex._1._5._7;
 
+import java.util.Arrays;
+
 public abstract class UF {
     protected final int[] id;
     protected int count;
@@ -23,4 +25,9 @@ public abstract class UF {
     public abstract int find(int p);
 
     public abstract void union(int p, int q);
+
+    @Override
+    public String toString() {
+        return "id: " + Arrays.toString(id);
+    }
 }
