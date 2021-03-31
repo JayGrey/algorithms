@@ -26,6 +26,10 @@ public abstract class UF {
 
     public abstract void union(int p, int q);
 
+    public int[] connections() {
+        return id;
+    }
+
     @Override
     public String toString() {
         return "id: " + Arrays.toString(id);

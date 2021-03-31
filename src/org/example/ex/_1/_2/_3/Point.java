@@ -2,7 +2,7 @@ package org.example.ex._1._2._3;
 
 import java.util.Objects;
 
-class Point {
+public class Point {
     public final double x;
     public final double y;
 
