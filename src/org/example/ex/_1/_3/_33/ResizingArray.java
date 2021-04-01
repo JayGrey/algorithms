@@ -1,6 +1,7 @@
 package org.example.ex._1._3._33;
 
 import java.util.Iterator;
+import java.util.StringJoiner;
 
 public final class ResizingArray<T> implements Iterable<T> {
 
@@ -81,6 +82,16 @@ public final class ResizingArray<T> implements Iterable<T> {
 
         System.arraycopy(array, 0, tempArray, 0, N);
         array = tempArray;
+    }
+
+    @Override
+    public String toString() {
+        final StringJoiner joiner = new StringJoiner(", ", "[", "]");
+
+        for (int i = 0; i < N; i++) {
+            joiner.add(array[i].toString());
+        }
+        return joiner.toString();
     }
 
     @Override

@@ -2,7 +2,7 @@ package org.example.ex._1._5._7;
 
 import java.util.Arrays;
 
-public abstract class UF {
+public abstract class UF implements IUF {
     protected final int[] id;
     protected int count;
 
@@ -14,17 +14,15 @@ public abstract class UF {
         }
     }
 
+    @Override
     public int count() {
         return count;
     }
 
+    @Override
     public boolean connected(int p, int q) {
         return find(p) == find(q);
     }
-
-    public abstract int find(int p);
-
-    public abstract void union(int p, int q);
 
     public int[] connections() {
         return id;
