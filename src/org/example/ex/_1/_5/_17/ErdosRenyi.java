@@ -3,6 +3,7 @@ package org.example.ex._1._5._17;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
+import org.example.ex._1._5._7.UF;
 import org.example.ex._1._5._7.WeightedQuickUnionUF;
 
 public class ErdosRenyi {
@@ -16,9 +17,11 @@ public class ErdosRenyi {
     }
 
     public static int count(int N) {
-        int connections = 0;
+        return count(N, new WeightedQuickUnionUF(N));
+    }
 
-        final WeightedQuickUnionUF uf = new WeightedQuickUnionUF(N);
+    public static int count(int N, UF uf) {
+        int connections = 0;
 
         while (uf.count() > 1) {
             final int p = StdRandom.uniform(N);
