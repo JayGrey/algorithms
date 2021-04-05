@@ -15,7 +15,7 @@ public class ErdosRenyi {
 
     }
 
-    private static int count(int N) {
+    public static int count(int N) {
         int connections = 0;
 
         final WeightedQuickUnionUF uf = new WeightedQuickUnionUF(N);
